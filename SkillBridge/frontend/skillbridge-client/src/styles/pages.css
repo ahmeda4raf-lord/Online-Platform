@@ -1,0 +1,121 @@
+.page-stack {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-hero {
+  padding: 2rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.6rem;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-hero h1,
+.section-heading h2 {
+  margin: 0 0 0.8rem;
+  font-size: clamp(2rem, 3vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.page-description,
+.section-heading p,
+.content-panel p,
+.course-card p,
+.form-error {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.content-panel {
+  padding: 1.5rem;
+}
+
+.split-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+}
+
+.course-grid,
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.course-card,
+.stat-card {
+  padding: 1.25rem;
+}
+
+.course-badge {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(244, 162, 97, 0.18);
+  color: #b45309;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.course-card h3,
+.stat-card strong {
+  margin: 0 0 0.75rem;
+}
+
+.stat-card span {
+  display: block;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+
+.form-panel {
+  max-width: 640px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.form-grid input,
+.form-grid select {
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: white;
+}
+
+.form-error {
+  color: #c1121f;
+}
+
+@media (max-width: 768px) {
+  .split-panel {
+    grid-template-columns: 1fr;
+  }
+}
