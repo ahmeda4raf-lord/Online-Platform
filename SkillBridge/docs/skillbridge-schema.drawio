@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-20T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="skillbridge-schema" name="SkillBridge Database Schema">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="&lt;b&gt;SkillBridge Database Schema&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;12&quot;&gt;EF Core domain model + ASP.NET Core Identity (SQL Server)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontColor=#17324d;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="900" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;PK = Primary Key &amp;nbsp; FK = Foreign Key &amp;nbsp; UQ = Unique index&lt;br&gt;Solid connectors show one-to-many relationships; labels show delete behavior." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7f9fc;strokeColor=#7f8c8d;fontColor=#34495e;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="20" width="650" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="domain-group" value="DOMAIN TABLES" style="swimlane;html=1;rounded=1;startSize=32;horizontal=1;fillColor=#e8f4f8;swimlaneFillColor=#fbfdfe;strokeColor=#31708f;fontColor=#17324d;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="30" y="110" width="1470" height="1390" as="geometry"/>
+        </mxCell>
+        <mxCell id="identity-group" value="ASP.NET CORE IDENTITY TABLES" style="swimlane;html=1;rounded=1;startSize=32;horizontal=1;fillColor=#fff1d6;swimlaneFillColor=#fffdf8;strokeColor=#b7791f;fontColor=#5f370e;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="110" width="820" height="1390" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="categories" value="&lt;b&gt;Categories&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;Name : nvarchar(100) NOT NULL&lt;br&gt;Description : nvarchar(max) NOT NULL&lt;br&gt;CreatedAt : datetime2 NOT NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9ead3;strokeColor=#4f7f43;fontColor=#1f3d1a;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="180" width="320" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="courses" value="&lt;b&gt;Courses&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;Title : nvarchar(max) NOT NULL&lt;br&gt;Description : nvarchar(max) NOT NULL&lt;br&gt;Price : decimal(18,2) NOT NULL&lt;br&gt;Level : nvarchar(max) NOT NULL&lt;br&gt;ThumbnailUrl : nvarchar(max) NOT NULL&lt;br&gt;Status : int NOT NULL&lt;br&gt;RejectionReason : nvarchar(max) NULL&lt;br&gt;FK InstructorId : nvarchar(450) NOT NULL&lt;br&gt;FK CategoryId : int NOT NULL&lt;br&gt;CreatedAt : datetime2 NOT NULL&lt;br&gt;UpdatedAt : datetime2 NOT NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cfe2f3;strokeColor=#3d6d99;fontColor=#17365d;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="155" width="385" height="315" as="geometry"/>
+        </mxCell>
+        <mxCell id="sections" value="&lt;b&gt;CourseSections&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;Title : nvarchar(max) NOT NULL&lt;br&gt;Order : int NOT NULL&lt;br&gt;FK CourseId : int NOT NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9eaf7;strokeColor=#3d6d99;fontColor=#17365d;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="180" width="330" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="lessons" value="&lt;b&gt;Lessons&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;Title : nvarchar(max) NOT NULL&lt;br&gt;Content : nvarchar(max) NOT NULL&lt;br&gt;VideoUrl : nvarchar(max) NOT NULL&lt;br&gt;Order : int NOT NULL&lt;br&gt;IsPreview : bit NOT NULL&lt;br&gt;FK CourseSectionId : int NOT NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9eaf7;strokeColor=#3d6d99;fontColor=#17365d;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="510" width="350" height="225" as="geometry"/>
+        </mxCell>
+        <mxCell id="enrollments" value="&lt;b&gt;Enrollments&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;FK StudentId : nvarchar(450) NOT NULL&lt;br&gt;FK CourseId : int NOT NULL&lt;br&gt;EnrolledAt : datetime2 NOT NULL&lt;br&gt;ProgressPercentage : float NOT NULL&lt;br&gt;IsCompleted : bit NOT NULL&lt;br&gt;&lt;b&gt;UQ (StudentId, CourseId)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b45f06;fontColor=#783f04;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="580" width="390" height="225" as="geometry"/>
+        </mxCell>
+        <mxCell id="progress" value="&lt;b&gt;LessonProgressRecords&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Entity: LessonProgress&lt;/font&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;FK StudentId : nvarchar(450) NOT NULL&lt;br&gt;FK LessonId : int NOT NULL&lt;br&gt;IsCompleted : bit NOT NULL&lt;br&gt;CompletedAt : datetime2 NULL&lt;br&gt;&lt;b&gt;UQ (StudentId, LessonId)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b45f06;fontColor=#783f04;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="880" width="410" height="220" as="geometry"/>
+        </mxCell>
+        <mxCell id="reviews" value="&lt;b&gt;Reviews&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;FK StudentId : nvarchar(450) NOT NULL&lt;br&gt;FK CourseId : int NOT NULL&lt;br&gt;Rating : int NOT NULL&lt;br&gt;Comment : nvarchar(max) NOT NULL&lt;br&gt;CreatedAt : datetime2 NOT NULL&lt;br&gt;&lt;b&gt;UQ (StudentId, CourseId)&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b45f06;fontColor=#783f04;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="990" width="390" height="225" as="geometry"/>
+        </mxCell>
+        <mxCell id="enum" value="&lt;b&gt;CourseStatus (enum, stored as int)&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;Draft = 1&lt;br&gt;Pending = 2&lt;br&gt;Published = 3&lt;br&gt;Rejected = 4&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#5f4b00;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="450" width="320" height="165" as="geometry"/>
+        </mxCell>
+        <mxCell id="rules-note" value="&lt;b&gt;Model notes&lt;/b&gt;&lt;br&gt;Navigation collection properties are not database columns.&lt;br&gt;String columns without explicit MaxLength map to nvarchar(max).&lt;br&gt;All FK properties shown are required by the current non-nullable CLR types." style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#f3f3f3;strokeColor=#888888;fontColor=#444444;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="70" y="760" width="320" height="190" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="users" value="&lt;b&gt;AspNetUsers&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;10&quot;&gt;Entity: ApplicationUser : IdentityUser&lt;/font&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : nvarchar(450)&lt;br&gt;UserName : nvarchar(256) NULL&lt;br&gt;NormalizedUserName : nvarchar(256) NULL [index]&lt;br&gt;Email : nvarchar(256) NULL&lt;br&gt;NormalizedEmail : nvarchar(256) NULL [index]&lt;br&gt;EmailConfirmed : bit NOT NULL&lt;br&gt;PasswordHash : nvarchar(max) NULL&lt;br&gt;SecurityStamp : nvarchar(max) NULL&lt;br&gt;ConcurrencyStamp : nvarchar(max) NULL&lt;br&gt;PhoneNumber : nvarchar(max) NULL&lt;br&gt;PhoneNumberConfirmed : bit NOT NULL&lt;br&gt;TwoFactorEnabled : bit NOT NULL&lt;br&gt;LockoutEnd : datetimeoffset NULL&lt;br&gt;LockoutEnabled : bit NOT NULL&lt;br&gt;AccessFailedCount : int NOT NULL&lt;br&gt;&lt;b&gt;FullName : nvarchar(max) NOT NULL&lt;br&gt;CreatedAt : datetime2 NOT NULL&lt;br&gt;IsBlocked : bit NOT NULL&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="155" width="450" height="445" as="geometry"/>
+        </mxCell>
+        <mxCell id="roles" value="&lt;b&gt;AspNetRoles&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : nvarchar(450)&lt;br&gt;Name : nvarchar(256) NULL&lt;br&gt;NormalizedName : nvarchar(256) NULL [UQ]&lt;br&gt;ConcurrencyStamp : nvarchar(max) NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6b3;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="2070" y="170" width="240" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="userroles" value="&lt;b&gt;AspNetUserRoles&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK/FK UserId : nvarchar(450)&lt;br&gt;PK/FK RoleId : nvarchar(450)&lt;br&gt;Composite PK (UserId, RoleId)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1800" y="690" width="290" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="userclaims" value="&lt;b&gt;AspNetUserClaims&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;FK UserId : nvarchar(450)&lt;br&gt;ClaimType : nvarchar(max) NULL&lt;br&gt;ClaimValue : nvarchar(max) NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="920" width="300" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="userlogins" value="&lt;b&gt;AspNetUserLogins&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK LoginProvider : nvarchar(128)&lt;br&gt;PK ProviderKey : nvarchar(128)&lt;br&gt;ProviderDisplayName : nvarchar(max) NULL&lt;br&gt;FK UserId : nvarchar(450)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1910" y="920" width="350" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="usertokens" value="&lt;b&gt;AspNetUserTokens&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK/FK UserId : nvarchar(450)&lt;br&gt;PK LoginProvider : nvarchar(128)&lt;br&gt;PK Name : nvarchar(128)&lt;br&gt;Value : nvarchar(max) NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="1190" width="320" height="175" as="geometry"/>
+        </mxCell>
+        <mxCell id="roleclaims" value="&lt;b&gt;AspNetRoleClaims&lt;/b&gt;&lt;hr&gt;&lt;font face=&quot;Courier New&quot;&gt;PK Id : int&lt;br&gt;FK RoleId : nvarchar(450)&lt;br&gt;ClaimType : nvarchar(max) NULL&lt;br&gt;ClaimValue : nvarchar(max) NULL&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce5cd;strokeColor=#b7791f;fontColor=#5f370e;align=left;verticalAlign=top;spacing=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1980" y="1190" width="300" height="175" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-category-course" value="Restrict" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#4f7f43;fontColor=#365f2d;" edge="1" parent="1" source="categories" target="courses"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-course-section" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#3d6d99;fontColor=#17365d;" edge="1" parent="1" source="courses" target="sections"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-section-lesson" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#3d6d99;fontColor=#17365d;" edge="1" parent="1" source="sections" target="lessons"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-course-enrollment" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b45f06;fontColor=#783f04;" edge="1" parent="1" source="courses" target="enrollments"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-course-review" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b45f06;fontColor=#783f04;" edge="1" parent="1" source="courses" target="reviews"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-lesson-progress" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b45f06;fontColor=#783f04;" edge="1" parent="1" source="lessons" target="progress"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-course" value="Instructor / Restrict" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#8a5a13;fontColor=#5f370e;dashed=1;" edge="1" parent="1" source="users" target="courses"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-enrollment" value="Student / Restrict" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#8a5a13;fontColor=#5f370e;dashed=1;" edge="1" parent="1" source="users" target="enrollments"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-progress" value="Student / Restrict" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#8a5a13;fontColor=#5f370e;dashed=1;" edge="1" parent="1" source="users" target="progress"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-review" value="Student / Restrict" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#8a5a13;fontColor=#5f370e;dashed=1;" edge="1" parent="1" source="users" target="reviews"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e-user-userrole" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="users" target="userroles"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-role-userrole" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="roles" target="userroles"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-claims" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="users" target="userclaims"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-logins" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="users" target="userlogins"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-user-tokens" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="users" target="usertokens"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e-role-claims" value="Cascade" style="edgeStyle=entityRelationEdgeStyle;rounded=0;html=1;startArrow=ERone;startFill=0;endArrow=ERzeroToMany;endFill=0;strokeColor=#b7791f;fontColor=#5f370e;" edge="1" parent="1" source="roles" target="roleclaims"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

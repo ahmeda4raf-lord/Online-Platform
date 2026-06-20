@@ -1,0 +1,99 @@
+# SkillBridge Schema Diagram
+
+This file contains the editable Mermaid ER diagram for the backend schema.
+
+## Mermaid
+
+```mermaid
+erDiagram
+    ApplicationUser ||--o{ Course : instructs
+    Category ||--o{ Course : classifies
+    Course ||--o{ CourseSection : contains
+    CourseSection ||--o{ Lesson : contains
+    ApplicationUser ||--o{ Enrollment : enrolls
+    Course ||--o{ Enrollment : has
+    ApplicationUser ||--o{ LessonProgress : tracks
+    Lesson ||--o{ LessonProgress : has
+    ApplicationUser ||--o{ Review : writes
+    Course ||--o{ Review : receives
+
+    ApplicationUser {
+        string Id PK
+        string FullName
+        datetime CreatedAt
+        bool IsBlocked
+    }
+
+    Category {
+        int Id PK
+        string Name
+        string Description
+        datetime CreatedAt
+    }
+
+    Course {
+        int Id PK
+        string Title
+        string Description
+        decimal Price
+        string Level
+        string ThumbnailUrl
+        int Status
+        string RejectionReason
+        string InstructorId FK
+        int CategoryId FK
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+
+    CourseSection {
+        int Id PK
+        string Title
+        int Order
+        int CourseId FK
+    }
+
+    Lesson {
+        int Id PK
+        string Title
+        string Content
+        string VideoUrl
+        int Order
+        bool IsPreview
+        int CourseSectionId FK
+    }
+
+    Enrollment {
+        int Id PK
+        string StudentId FK
+        int CourseId FK
+        datetime EnrolledAt
+        double ProgressPercentage
+        bool IsCompleted
+    }
+
+    LessonProgress {
+        int Id PK
+        string StudentId FK
+        int LessonId FK
+        bool IsCompleted
+        datetime CompletedAt
+    }
+
+    Review {
+        int Id PK
+        string StudentId FK
+        int CourseId FK
+        int Rating
+        string Comment
+        datetime CreatedAt
+    }
+```
+
+## Notes
+
+- `ApplicationUser` maps to ASP.NET Identity's user table.
+- Unique indexes exist on:
+  - `Enrollment(StudentId, CourseId)`
+  - `LessonProgress(StudentId, LessonId)`
+  - `Review(StudentId, CourseId)`
