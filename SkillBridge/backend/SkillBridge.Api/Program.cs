@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SkillBridge.Api.Data;
 using SkillBridge.Api.Helpers;
 using SkillBridge.Api.Mappings;
@@ -92,18 +92,18 @@ builder.Services.AddSwaggerGen(options =>
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
-        BearerFormat = "JWT",
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
+        BearerFormat = "JWT"
     };
 
-    options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    var securitySchemeReference = new OpenApiSecuritySchemeReference(
+        JwtBearerDefaults.AuthenticationScheme,
+        null,
+        null);
+
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+    options.AddSecurityRequirement(_ => new OpenApiSecurityRequirement
     {
-        { securityScheme, Array.Empty<string>() }
+        { securitySchemeReference, new List<string>() }
     });
 });
 
